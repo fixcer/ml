@@ -1,0 +1,7 @@
+MBA dùng Apriori Algorithm
+
+Ở bước k ghép k-1 phần đầu với nhau.
+
+Có thể loại do bị loại từ bước trước.
+
+Tập phổ biến >= tập bao phổ biến >= tập phổ biến tối đại.
