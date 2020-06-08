@@ -2,14 +2,17 @@ import numpy as np
 import pandas as pd
 import pickle
 import nltk
-import collections
+from collections import Counter
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 
+# Chưa ưu tiên bài báo đọc gần nhất
+
 def last(n): 
     return n[0]   
+
 
 def sort(tuples):  
     return sorted(tuples, key = last)
@@ -23,6 +26,7 @@ def preprocess(sentence):
 	filtered_words = [stemmer.stem(w) for w in tokens]
 
 	return " ".join(filtered_words)
+
 
 data = pd.read_csv('../dataset/seen.csv')
 x = data['text'].tolist()
@@ -38,7 +42,15 @@ X = loaded_vec.transform(x)
 X = loaded_tfidf.transform(X)
 predicted = loaded_model.predict(X)
 
-most_seen = sort(list(collections.Counter(predicted).items()))[0][0]
+most_seen = Counter(predicted)
+tmp = 0
+for k, v in most_seen.items():
+	tmp = max(tmp, v)
+
+for k, v in most_seen.items():
+	if v == tmp:
+		most_seen = k
+		break
 print(most_seen + '\n' + "-"*100)
 
 data = pd.read_csv('../dataset/dataset.csv')

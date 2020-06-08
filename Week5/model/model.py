@@ -24,10 +24,9 @@ x = data['text'].tolist()
 y = data['category'].tolist()
 
 for index, value in enumerate(x):
-    print("Processing data:", index+1)
     x[index] = preprocess(x[index])
 
-count_vect = CountVectorizer()
+count_vect = CountVectorizer(stop_words='english', min_df=3)
 X = count_vect.fit_transform(x)
 pickle.dump(count_vect.vocabulary_, open("count_vector.pkl","wb"))
 
@@ -36,12 +35,10 @@ X = tfidf_transformer.fit_transform(X)
 pickle.dump(tfidf_transformer, open("tfidf.pkl","wb"))
 Y = np.array(y)
 
-print("\nNo of features extracted:",X.shape[1])
-
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
-
-print("Train size:", X_train.shape)
-print("Test size:", X_test.shape)
+print("Number of features extracted:",X.shape[1])
+print("Train size:", X_train.shape[0])
+print("Test size:", X_test.shape[0])
 
 
 model = MultinomialNB().fit(X_train, y_train)
@@ -49,12 +46,6 @@ pickle.dump(model, open("nb_model.pkl", "wb"))
 
 y_pred = model.predict(X_test)
 
-c_mat = confusion_matrix(y_test,y_pred)
-acc = accuracy_score(y_test,y_pred)
-# precision = precision_score(y_test, y_pred)
-# recall = recall_score(y_test, y_pred)
-
-print("Confusion Matrix:\n", c_mat)
-print("\nAccuracy:", '{:.2f}'.format(acc))
-# print("\nPrecision:", '{:.2f}'.format(precision))
-# print("\nRecall:", '{:.2f}'.format(recall))
+print('\nAccuracy %s' % accuracy_score(y_test, y_pred))
+print(confusion_matrix(y_test,y_pred))
+print(classification_report(y_test, y_pred,target_names=['politics','tech']))

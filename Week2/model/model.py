@@ -4,7 +4,6 @@ from matplotlib import pyplot as plt
 
 import nltk
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.snowball import SnowballStemmer
 
@@ -21,13 +20,11 @@ STOPWORDS = set(stopwords.words('english'))
 def preprocess(sentence):
 	sentence = sentence.lower()
 	stemmer = SnowballStemmer("english")
-	lemmatizer = WordNetLemmatizer()
 	tokenizer = RegexpTokenizer(r'\w+')
 	tokens = tokenizer.tokenize(sentence)
 	tokens = [stemmer.stem(w) for w in tokens if w not in STOPWORDS]
-	filtered_words = [lemmatizer.lemmatize(token) for token in tokens]
 
-	return " ".join(filtered_words)
+	return " ".join(tokens)
 
 df = pd.read_csv('../dataset/dataset.csv')
 df = df[pd.notnull(df['category'])]
@@ -53,7 +50,7 @@ print("\nTrain size:", X_train.shape[0])
 print("Test size:", X_test.shape[0])
 
 
-model = Pipeline([('vect', CountVectorizer(max_features=3000)),
+model = Pipeline([('vect', CountVectorizer(min_df=3)),
 					('tfidf', TfidfTransformer()),
 					('clf', LinearSVC()),])
 					# ('clf', MultinomialNB()),])

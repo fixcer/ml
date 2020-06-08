@@ -1,6 +1,6 @@
 MBA dùng Apriori Algorithm
 
-Ở bước k ghép k-1 phần đầu với nhau.
+Ở bước k ghép k-2 phần đầu với nhau.
 
 Có thể loại do bị loại từ bước trước.
 
