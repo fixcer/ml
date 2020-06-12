@@ -9,14 +9,6 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 # Chưa ưu tiên bài báo đọc gần nhất
 
-def last(n): 
-    return n[0]   
-
-
-def sort(tuples):  
-    return sorted(tuples, key = last)
-
-
 def preprocess(sentence):
 	sentence = sentence.lower()
 	stemmer = SnowballStemmer("english")
