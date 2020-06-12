@@ -5,8 +5,7 @@ import nltk
 from collections import Counter
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.snowball import SnowballStemmer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 # Chưa ưu tiên bài báo đọc gần nhất
 
@@ -55,6 +54,6 @@ print(most_seen + '\n' + "-"*100)
 
 data = pd.read_csv('../dataset/dataset.csv')
 data = data.loc[data['category'] == most_seen]
-x = data["text"].sample(frac = 1).reset_index(drop = True).tolist()
+x = data["text"].sample(frac=1).reset_index(drop=True).tolist()
 for i in x[:10]:
 	print(i, "\n", "-"*100)
