@@ -35,7 +35,7 @@ predicted = loaded_model.predict(X)
 
 most_seen = Counter(predicted)
 tmp = 0
-for k, v in most_seen.items():
+for v in most_seen.values():
 	tmp = max(tmp, v)
 
 for k, v in most_seen.items():
