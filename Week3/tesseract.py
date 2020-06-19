@@ -5,7 +5,7 @@ import os
 
 blur_threshold = 100
 
-image = cv2.imread('./image_00.png')
+image = cv2.imread('./image_02.png')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 # Tính toán focus của ảnh (cạnh)
@@ -17,7 +17,7 @@ gray = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 filename = "{}.png".format(os.getpid())
 cv2.imwrite(filename, gray)
 
-result = pytesseract.image_to_string(Image.open(filename), lang='eng+vie')
+result = pytesseract.image_to_string(Image.open(filename), lang='eng')
 print(result)
 
 os.remove(filename)
